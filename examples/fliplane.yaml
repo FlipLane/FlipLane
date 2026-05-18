@@ -1,0 +1,40 @@
+name: my-project
+default_lane: dev
+
+lanes:
+  - name: dev
+    description: Development pipeline
+    env:
+      APP_ENV: development
+    tasks:
+      - name: install
+        run: pip install -r requirements.txt
+      - name: lint
+        run: flake8 .
+        ignore_errors: true
+      - name: test
+        run: pytest tests/
+
+  - name: staging
+    description: Staging pipeline
+    env:
+      APP_ENV: staging
+    tasks:
+      - name: install
+        run: pip install -r requirements.txt
+      - name: test
+        run: pytest tests/
+      - name: build
+        run: python setup.py sdist bdist_wheel
+
+  - name: prod
+    description: Production pipeline
+    env:
+      APP_ENV: production
+    tasks:
+      - name: test
+        run: pytest tests/ -x
+      - name: build
+        run: python setup.py sdist bdist_wheel
+      - name: deploy
+        run: python deploy.py

@@ -1,0 +1,24 @@
+name: fliplane
+default_lane: dev
+
+lanes:
+  - name: dev
+    description: Development checks
+    tasks:
+      - name: install
+        run: pip install -e ".[dev]"
+        ignore_errors: true
+      - name: test
+        run: python -m pytest tests/ -v
+
+  - name: ci
+    description: CI pipeline
+    tasks:
+      - name: install
+        run: pip install -e ".[dev]"
+        ignore_errors: true
+      - name: lint
+        run: python -m flake8 fliplane/
+        ignore_errors: true
+      - name: test
+        run: python -m pytest tests/ -v
