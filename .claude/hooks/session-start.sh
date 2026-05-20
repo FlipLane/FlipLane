@@ -7,4 +7,4 @@ fi
 
 cd "$CLAUDE_PROJECT_DIR"
 
-pip install -e ".[dev]" 2>/dev/null || pip install -e . && pip install pytest
+pip install -e ".[dev]" 2>/dev/null || pip install -e . && pip install pytest flake8
