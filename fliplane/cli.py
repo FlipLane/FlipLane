@@ -14,7 +14,8 @@ def main():
 
 @main.command()
 @click.argument("lane", required=False)
-@click.option("-f", "--file", default="fliplane.yaml", help="Pipeline config file")
+@click.option("-f", "--file", default="fliplane.yaml",
+              help="Pipeline config file")
 def run(lane, file):
     """Run a pipeline lane (defaults to active lane)."""
     try:
@@ -27,7 +28,8 @@ def run(lane, file):
 
 
 @main.command()
-@click.option("-f", "--file", default="fliplane.yaml", help="Pipeline config file")
+@click.option("-f", "--file", default="fliplane.yaml",
+              help="Pipeline config file")
 def run_all(file):
     """Run all lanes in the pipeline."""
     try:
@@ -41,7 +43,8 @@ def run_all(file):
 
 @main.command()
 @click.argument("lane")
-@click.option("-f", "--file", default="fliplane.yaml", help="Pipeline config file")
+@click.option("-f", "--file", default="fliplane.yaml",
+              help="Pipeline config file")
 def flip(lane, file):
     """Show what would run if you flip to a different lane."""
     try:
@@ -49,16 +52,21 @@ def flip(lane, file):
         if lane not in pipeline.lanes:
             console.print(f"[red]Lane '{lane}' not found.[/red]")
             raise SystemExit(1)
-        console.print(f"\n[bold]Flipping to lane:[/bold] [yellow]{lane}[/yellow]")
+        console.print(
+            f"\n[bold]Flipping to lane:[/bold] [yellow]{lane}[/yellow]"
+        )
         for task in pipeline.lanes[lane].tasks:
-            console.print(f"  [blue]▶[/blue] {task.name}: [dim]{task.command}[/dim]")
+            console.print(
+                f"  [blue]▶[/blue] {task.name}: [dim]{task.command}[/dim]"
+            )
     except FileNotFoundError as e:
         console.print(f"[red]Error:[/red] {e}")
         raise SystemExit(1) from e
 
 
 @main.command()
-@click.option("-f", "--file", default="fliplane.yaml", help="Pipeline config file")
+@click.option("-f", "--file", default="fliplane.yaml",
+              help="Pipeline config file")
 def list(file):
     """List all lanes and tasks in the pipeline."""
     try:

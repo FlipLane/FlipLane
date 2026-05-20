@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import Dict, List, Optional
+from typing import Dict, Optional
 from .lane import Lane
 
 
@@ -17,7 +17,9 @@ class Pipeline:
 
     def flip(self, lane_name: str) -> "Pipeline":
         if lane_name not in self.lanes:
-            raise ValueError(f"Lane '{lane_name}' not found in pipeline '{self.name}'")
+            raise ValueError(
+                f"Lane '{lane_name}' not found in pipeline '{self.name}'"
+            )
         self.active_lane = lane_name
         return self
 
@@ -31,11 +33,17 @@ class Pipeline:
         if target not in self.lanes:
             raise ValueError(f"Lane '{target}' not found")
 
-        out.print(f"\n[bold magenta]Pipeline:[/bold magenta] [white]{self.name}[/white]")
+        out.print(
+            f"\n[bold magenta]Pipeline:[/bold magenta]"
+            f" [white]{self.name}[/white]"
+        )
         success = self.lanes[target].run(console=out)
 
         if success:
-            out.print(f"\n[bold green]Pipeline '{self.name}' completed successfully.[/bold green]")
+            out.print(
+                f"\n[bold green]Pipeline '{self.name}'"
+                f" completed successfully.[/bold green]"
+            )
         else:
             out.print(f"\n[bold red]Pipeline '{self.name}' failed.[/bold red]")
         return success
@@ -44,7 +52,10 @@ class Pipeline:
         from rich.console import Console
         out = console or Console()
 
-        out.print(f"\n[bold magenta]Pipeline:[/bold magenta] [white]{self.name}[/white] (all lanes)")
+        out.print(
+            f"\n[bold magenta]Pipeline:[/bold magenta]"
+            f" [white]{self.name}[/white] (all lanes)"
+        )
         for lane in self.lanes.values():
             if not lane.run(console=out):
                 return False

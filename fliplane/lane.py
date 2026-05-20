@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from typing import List, Optional
+from typing import List
 from .task import Task
 
 
@@ -18,12 +18,16 @@ class Lane:
         from rich.console import Console
         out = console or Console()
 
-        out.print(f"\n[bold cyan]Lane:[/bold cyan] [yellow]{self.name}[/yellow]")
+        out.print(
+            f"\n[bold cyan]Lane:[/bold cyan] [yellow]{self.name}[/yellow]"
+        )
         if self.description:
             out.print(f"  [dim]{self.description}[/dim]")
 
         for task in self.tasks:
-            out.print(f"  [blue]▶[/blue] Running task: [bold]{task.name}[/bold]")
+            out.print(
+                f"  [blue]▶[/blue] Running task: [bold]{task.name}[/bold]"
+            )
             out.print(f"    [dim]{task.command}[/dim]")
             success = task.run(extra_env=self.env)
             if success:
